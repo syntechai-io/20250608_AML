@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AML/CFT Schulung für deutsche CASPs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.4rem;
+            margin: 25px 0 15px 0;
+        }
+
+        .visual-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .phase-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .phase-box {
+            flex: 1;
+            min-width: 250px;
+            margin: 10px;
+            padding: 25px;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            border-radius: 12px;
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .phase-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+
+        .case-study {
+            background: #f8f9fa;
+            border-left: 5px solid #e74c3c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .red-flag {
+            background: #fff5f5;
+            border: 2px solid #fed7d7;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+
+        .red-flag::before {
+            content: "⚠️ ";
+            font-size: 1.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 5px solid #3498db;
+        }
+
+        .quiz-options {
+            margin: 15px 0;
+        }
+
+        .quiz-option {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+        }
+
+        .quiz-option:hover {
+            background: #e9ecef;
+        }
+
+        .quiz-option input {
+            margin-right: 10px;
+        }
+
+        .result-correct {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .result-incorrect {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .certificate {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .navigation {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 768px) {
+            .phase-container {
+                flex-direction: column;
+            }
+            
+            .phase-box {
+                margin: 10px 0;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ AML/CFT Compliance Schulung</h1>
+            <p>Für deutsche Crypto Asset Service Provider (CASPs)</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </div>
+
+        <!-- Benutzerregistrierung -->
+        <div class="section active" id="registration">
+            <h2>📋 Teilnehmerregistrierung</h2>
+            <div class="form-group">
+                <label for="firstName">Vorname *</label>
+                <input type="text" id="firstName" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Nachname *</label>
+                <input type="text" id="lastName" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-Mail-Adresse *</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="company">Firmenname</label>
+                <input type="text" id="company">
+            </div>
+            <button class="btn" onclick="startTraining()">Schulung beginnen</button>
+        </div>
+
+        <!-- Modul 1: KYB -->
+        <div class="section" id="module1">
+            <h2>🏢 Modul 1: Know Your Business (KYB) im Krypto-Bereich</h2>
+            
+            <div class="visual-box">
+                <h3>🔍 Was ist KYB?</h3>
+                <p>Know Your Business ist der Verifizierungsprozess zur Authentifizierung der Identität und Legitimität von Geschäftskunden vor Geschäftsbeziehungen.</p>
+            </div>
+
+            <h3>Kernelemente des KYB-Prozesses</h3>
+            <div class="phase-container">
+                <div class="phase-box">
+                    <div class="phase-number">📄</div>
+                    <h4>Geschäftsregistrierung</h4>
+                    <p>Verifizierung von Firmenname, Adresse und Registrierungsnummer</p>
+                </div>
+                <div class="phase-box">
+                    <div class="phase-number">👥</div>
+                    <h4>Eigentumsstruktur</h4>
+                    <p>Identifizierung des wirtschaftlich Berechtigten (UBO)</p>
+                </div>
+                <div class="phase-box">
+                    <div class="phase-number">⚖️</div>
+                    <h4>Regulatorische Compliance</h4>
+                    <p>Überprüfung der AML/CFT-Bestimmungen</p>
+                </div>
+            </div>
+
+            <h3>KYB-Anforderungen für CASPs</h3>
+            <ul>
+                <li><strong>Handelsregisterauszug:</strong> Nicht älter als 3 Monate</li>
+                <li><strong>UBO-Identifizierung:</strong> Bei Beteiligung > 25%</li>
+                <li><strong>Geschäftsführer-Legitimation:</strong> Ausweis und Bevollmächtigung</li>
+                <li><strong>Zweckbestimmung:</strong> Dokumentation des Geschäftszwecks</li>
+            </ul>
+
+            <div class="red-flag">
+                <strong>Red Flag:</strong> Komplexe Eigentumsstrukturen über mehrere Jurisdiktionen ohne erkennbaren Geschäftszweck
+            </div>
+
+            <button class="btn" onclick="nextModule(2)">Weiter zu Modul 2</button>
+        </div>
+
+        <!-- Modul 2: Drei Phasen der Geldwäsche -->
+        <div class="section" id="module2">
+            <h2>💰 Modul 2: Die drei Phasen der Geldwäsche</h2>
+            
+            <div class="visual-box">
+                <h3>🔄 Geldwäsche-Zyklus</h3>
+                <p>Geldwäsche ist ein dreistufiger Prozess zur Verschleierung der illegalen Herkunft von Geldern</p>
+            </div>
+
+            <div class="phase-container">
+                <div class="phase-box">
+                    <div class="phase-number">1</div>
+                    <h4>Platzierung (Placement)</h4>
+                    <p>Einbringung illegaler Gelder ins Finanzsystem</p>
+                    <ul>
+                        <li>Direkte Krypto-Zahlungen</li>
+                        <li>Fiat-zu-Krypto-Konvertierung</li>
+                        <li>Verwendung von Krypto-ATMs</li>
+                    </ul>
+                </div>
+                <div class="phase-box">
+                    <div class="phase-number">2</div>
+                    <h4>Verschleierung (Layering)</h4>
+                    <p>Verschleierung der illegalen Herkunft</p>
+                    <ul>
+                        <li>Chain Hopping</li>
+                        <li>Krypto-Mixer/Tumbler</li>
+                        <li>P2P-Plattformen</li>
+                    </ul>
+                </div>
+                <div class="phase-box">
+                    <div class="phase-number">3</div>
+                    <h4>Integration</h4>
+                    <p>Rückführung in legitimes System</p>
+                    <ul>
+                        <li>Immobilien-Investitionen</li>
+                        <li>Luxusgüter-Käufe</li>
+                        <li>Geschäftsunternehmen</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Krypto-spezifische Verschleierungstaktiken</h3>
+            <div class="case-study">
+                <h4>🔀 Chain Hopping</h4>
+                <p>Bewegung von Assets zwischen verschiedenen Blockchains (Bitcoin → Ethereum → Monero) zur Umgehung der Erkennung</p>
+            </div>
+
+            <div class="case-study">
+                <h4>🌪️ Krypto-Mixer</h4>
+                <p>Services wie Tornado Cash, die Transaktionsspuren aufbrechen und die Zuordnung zu ursprünglichen Adressen verschleiern</p>
+            </div>
+
+            <button class="btn" onclick="nextModule(3)">Weiter zu Modul 3</button>
+        </div>
+
+        <!-- Modul 3: Reale Krypto-Fälle -->
+        <div class="section" id="module3">
+            <h2>🚨 Modul 3: Reale Krypto-Geldwäsche-Fälle</h2>
+
+            <div class="case-study">
+                <h3>💥 Fall 1: Bitfinex-Hack (2016)</h3>
+                <p><strong>Gestohlene Summe:</strong> 119.756 Bitcoin (damals 72 Mio. USD, heute über 3 Mrd. USD)</p>
+                <p><strong>Methoden:</strong></p>
+                <ul>
+                    <li>Chain Hopping zwischen verschiedenen Blockchains</li>
+                    <li>Verwendung von Krypto-Mixern zur Verschleierung</li>
+                    <li>Kleine VASPs mit schwachen AML-Kontrollen</li>
+                    <li>Zeitverzögerte Aktivierung nach Jahren</li>
+                </ul>
+                <p><strong>Aufklärung:</strong> 2022 durch Blockchain-Analytics aufgedeckt und Täter verhaftet</p>
+            </div>
+
+            <div class="case-study">
+                <h3>🕸️ Fall 2: Hydra Darknet Market</h3>
+                <p><strong>Volumen:</strong> Über 5 Milliarden USD illegaler Transaktionen</p>
+                <p><strong>Methoden:</strong></p>
+                <ul>
+                    <li>Unregulierte Börsen in schwachen AML-Jurisdiktionen</li>
+                    <li>Privacy Coins (Monero) zur Transaktionsverschleierung</li>
+                    <li>OTC-Broker ohne KYC-Anforderungen</li>
+                    <li>Automatisierte Mixing-Services</li>
+                </ul>
+                <p><strong>Impact:</strong> Größter Darknet-Marktplatz weltweit bis zur Schließung 2022</p>
+            </div>
+
+            <div class="case-study">
+                <h3>🇰🇵 Fall 3: Lazarus Group (Nordkorea)</h3>
+                <p><strong>Gestohlene Summe:</strong> Über 1,7 Milliarden USD durch verschiedene Angriffe</p>
+                <p><strong>Methoden:</strong></p>
+                <ul>
+                    <li>DeFi-Plattformen ohne KYC-Anforderungen</li>
+                    <li>Cross-Chain-Swapping zwischen verschiedenen Blockchains</li>
+                    <li>Staatlich koordinierte Cyberangriffe</li>
+                    <li>Nutzung von DEXs zur Vermeidung von Compliance</li>
+                </ul>
+            </div>
+
+            <div class="red-flag">
+                <strong>Lesson Learned:</strong> Diese Fälle zeigen die Wichtigkeit robuster AML-Kontrollen und kontinuierlicher Blockchain-Überwachung
+            </div>
+
+            <button class="btn" onclick="nextModule(4)">Weiter zu Modul 4</button>
+        </div>
+
+        <!-- Modul 4: CTF -->
+        <div class="section" id="module4">
+            <h2>⚡ Modul 4: Counter-Terrorism Financing (CTF)</h2>
+
+            <div class="visual-box">
+                <h3>🎯 CTF-Ziele</h3>
+                <p>Verhinderung der Nutzung von Kryptowährungen zur Finanzierung terroristischer Aktivitäten</p>
+            </div>
+
+            <h3>Terrorismusfinanzierungs-Risiken bei Krypto</h3>
+            <ul>
+                <li><strong>Pseudonyme Transaktionen:</strong> Schwer nachzuverfolgen</li>
+                <li><strong>Grenzüberschreitende Transfers:</strong> Ohne traditionelle Bankenaufsicht</li>
+                <li><strong>Dezentrale Finanzierung:</strong> DeFi-Protokolle ohne zentrale Kontrolle</li>
+                <li><strong>Schnelle Liquidität:</strong> Sofortige Umwandlung in verschiedene Assets</li>
+            </ul>
+
+            <h3>Red Flags für CTF</h3>
+            <div class="red-flag">
+                Transaktionen aus/zu Hochrisikoländern unter EU-Sanktionen (Russland, Belarus, Iran, Nordkorea)
+            </div>
+            <div class="red-flag">
+                Ungewöhnliche Transaktionsmuster ohne erkennbaren Geschäftszweck
+            </div>
+            <div class="red-flag">
+                Nutzung von Privacy Coins (Monero, Zcash) oder Mixing-Services
+            </div>
+            <div class="red-flag">
+                Transaktionen zu bekannten Darknet-Adressen oder Sanktionslisten-Einträgen
+            </div>
+
+            <h3>EU-Sanktionen gegen Russland und Belarus</h3>
+            <div class="case-study">
+                <h4>📜 Verordnung (EU) 833/2014 - Artikel 5b</h4>
+                <p><strong>Verbot:</strong> Bereitstellung von Krypto-Wallet-, Konto- oder Verwahrungsdienstleistungen für russische und belarussische Staatsangehörige</p>
+                <p><strong>Schwellenwert:</strong> 10.000 EUR pro natürlicher Person</p>
+                <p><strong>Ausnahmen:</strong> EU-Bürger und Residenten mit gültiger Aufenthaltserlaubnis</p>
+            </div>
+
+            <button class="btn" onclick="nextModule(5)">Weiter zu Modul 5</button>
+        </div>
+
+        <!-- Modul 5: Visuelle Analyse -->
+        <div class="section" id="module5">
+            <h2>📊 Modul 5: Blockchain-Analytics und Überwachung</h2>
+
+            <div class="visual-box">
+                <h3>🔬 Moderne Analytics-Tools</h3>
+                <p>Einsatz von KI und Machine Learning zur Erkennung verdächtiger Krypto-Transaktionen</p>
+            </div>
+
+            <h3>Suspicious Money Laundering Account Detection (SMLAD)</h3>
+            <ul>
+                <li><strong>40 statistische Features:</strong> Charakterisierung von Transaktionsverhalten</li>
+                <li><strong>Anomalie-Erkennung:</strong> Clustering-Methoden zur Mustererkennung</li>
+                <li><strong>Graph-Analyse:</strong> Visualisierung von Transaktionsnetzwerken</li>
+                <li><strong>Temporal Analysis:</strong> Zeitbasierte Verhaltensmuster</li>
+            </ul>
+
+            <h3>Echtzeit-Überwachung</h3>
+            <div class="phase-container">
+                <div class="phase-box">
+                    <div class="phase-number">⚡</div>
+                    <h4>Sofortige Erkennung</h4>
+                    <p>Verdächtige Transaktionen in Echtzeit identifizieren</p>
+                </div>
+                <div class="phase-box">
+                    <div class="phase-number">🎯</div>
+                    <h4>Risk Scoring</h4>
+                    <p>Automatische Bewertung des Geldwäsche-Risikos</p>
+                </div>
+                <div class="phase-box">
+                    <div class="phase-number">📋</div>
+                    <h4>Auto-Reporting</h4>
+                    <p>Automatische SAR-Generierung bei Verdachtsfällen</p>
+                </div>
+            </div>
+
+            <h3>Praktische Compliance-Maßnahmen</h3>
+            <ul>
+                <li><strong>Blockchain-Analytics-Tools:</strong> Chainalysis, Elliptic, CipherTrace</li>
+                <li><strong>Blacklisting:</strong> OFAC SDN List, EU Consolidated List</li>
+                <li><strong>Enhanced Due Diligence:</strong> Bei Transaktionen > 1.000 EUR</li>
+                <li><strong>SAR-Reporting:</strong> Verdachtsmeldungen an FIU binnen 2 Werktagen</li>
+            </ul>
+
+            <div class="red-flag">
+                <strong>Wichtig:</strong> Alle Compliance-Maßnahmen müssen dokumentiert und für BaFin-Prüfungen verfügbar sein
+            </div>
+
+            <button class="btn" onclick="startQuiz()">Quiz beginnen</button>
+        </div>
+
+        <!-- Quiz -->
+        <div class="section" id="quiz">
+            <h2>📝 Abschlusstest - AML/CFT Compliance</h2>
+            <p><strong>Hinweis:</strong> Sie müssen alle 8 Fragen korrekt beantworten (100% Erfolgsquote)</p>
+            
+            <div id="quizContainer"></div>
+            
+            <div class="navigation">
+                <button class="btn" id="submitQuiz" onclick="submitQuiz()" style="display:none;">Test auswerten</button>
+                <button class="btn" id="retakeQuiz" onclick="retakeQuiz()" style="display:none;">Test wiederholen</button>
+            </div>
+        </div>
+
+        <!-- Zertifikat -->
+        <div class="section" id="certificate">
+            <div class="certificate">
+                <h2>🏆 Herzlichen Glückwunsch!</h2>
+                <h3>AML/CFT Compliance Zertifikat</h3>
+                <p>Hiermit wird bestätigt, dass</p>
+                <h3 id="certificateName"></h3>
+                <p>die AML/CFT-Schulung für deutsche CASPs erfolgreich abgeschlossen hat.</p>
+                <p>Datum: <span id="certificateDate"></span></p>
+                <p>Zertifikat-ID: <span id="certificateId"></span></p>
+            </div>
+            <div class="navigation">
+                <button class="btn" onclick="downloadData()">📥 Daten exportieren</button>
+                <button class="btn" onclick="printCertificate()">🖨️ Zertifikat drucken</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentModule = 0;
+        let userData = {};
+        let quizAnswers = {};
+        let quizScore = 0;
+
+        const quizQuestions = [
+            {
+                question: "Welche Mindestkapitalanforderung gilt für deutsche Kryptoverwahrer nach KWG?",
+                options: ["EUR 50.000", "EUR 125.000", "EUR 250.000", "EUR 500.000"],
+                correct: 1
+            },
+            {
+                question: "Ab welchem Schwellenwert ist eine Kundenidentifizierung nach GwG bei Krypto-Transfers erforderlich?",
+                options: ["EUR 500", "EUR 1.000", "EUR 2.500", "EUR 5.000"],
+                correct: 1
+            },
+            {
+                question: "Welche EU-Verordnung verbietet Krypto-Services für russische Staatsangehörige?",
+                options: ["Verordnung 269/2014", "Verordnung 833/2014", "Verordnung 2022/328", "MiCAR"],
+                correct: 1
+            },
+            {
+                question: "Was versteht man unter 'Chain Hopping' bei Geldwäsche?",
+                options: ["Schnelle Transaktionen", "Bewegung zwischen Blockchains", "Große Beträge", "KYC-Vermeidung"],
+                correct: 1
+            },
+            {
+                question: "Wie lange müssen AML-Dokumente nach GwG aufbewahrt werden?",
+                options: ["3 Jahre", "5 Jahre", "7 Jahre", "10 Jahre"],
+                correct: 1
+            },
+            {
+                question: "Was sind PEPs im Kontext von Enhanced Due Diligence?",
+                options: ["Private Equity Personen", "Politisch exponierte Personen", "Professionelle Krypto-Trader", "Peer-to-Peer Nutzer"],
+                correct: 1
+            },
+            {
+                question: "Welches Land ist NICHT von den aktuellen EU-Krypto-Sanktionen betroffen?",
+                options: ["Russland", "Belarus", "Iran", "China"],
+                correct: 3
+            },
+            {
+                question: "An welche Behörde müssen Verdachtsmeldungen in Deutschland gerichtet werden?",
+                options: ["BaFin", "Financial Intelligence Unit (FIU)", "Bundesbank", "BKA"],
+                correct: 1
+            }
+        ];
+
+        function startTraining() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            
+            if (!firstName || !lastName || !email) {
+                alert('Bitte füllen Sie alle Pflichtfelder aus.');
+                return;
+            }
+            
+            userData = {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                company: document.getElementById('company').value,
+                startTime: new Date().toISOString(),
+                certificateId: generateCertificateId()
+            };
+            
+            nextModule(1);
+        }
+
+        function nextModule(moduleNumber) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            if (moduleNumber <= 5) {
+                document.getElementById(`module${moduleNumber}`).classList.add('active');
+                currentModule = moduleNumber;
+                updateProgress();
+            }
+        }
+
+        function startQuiz() {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById('quiz').classList.add('active');
+            generateQuiz();
+            updateProgress();
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+            
+            quizQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                questionDiv.innerHTML = `
+                    <h3>Frage ${index + 1}</h3>
+                    <p>${q.question}</p>
+                    <div class="quiz-options">
+                        ${q.options.map((option, optIndex) => `
+                            <label class="quiz-option">
+                                <input type="radio" name="question${index}" value="${optIndex}">
+                                ${option}
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+            
+            document.getElementById('submitQuiz').style.display = 'inline-block';
+        }
+
+        function submitQuiz() {
+            quizAnswers = {};
+            quizScore = 0;
+            
+            quizQuestions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                if (selected) {
+                    const answer = parseInt(selected.value);
+                    quizAnswers[index] = answer;
+                    if (answer === q.correct) {
+                        quizScore++;
+                    }
+                }
+            });
+            
+            if (Object.keys(quizAnswers).length < quizQuestions.length) {
+                alert('Bitte beantworten Sie alle Fragen.');
+                return;
+            }
+            
+            if (quizScore === quizQuestions.length) {
+                userData.completionTime = new Date().toISOString();
+                userData.quizScore = quizScore;
+                showCertificate();
+            } else {
+                alert(`Sie haben ${quizScore} von ${quizQuestions.length} Fragen richtig beantwortet. Sie benötigen 100% (${quizQuestions.length}/${quizQuestions.length}) zum Bestehen.`);
+                document.getElementById('retakeQuiz').style.display = 'inline-block';
+            }
+        }
+
+        function retakeQuiz() {
+            document.getElementById('retakeQuiz').style.display = 'none';
+            generateQuiz();
+        }
+
+        function showCertificate() {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById('certificate').classList.add('active');
+            
+            document.getElementById('certificateName').textContent = `${userData.firstName} ${userData.lastName}`;
+            document.getElementById('certificateDate').textContent = new Date().toLocaleDateString('de-DE');
+            document.getElementById('certificateId').textContent = userData.certificateId;
+            
+            updateProgress();
+        }
+
+        function generateCertificateId() {
+            return 'CASP-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substr(2, 4).toUpperCase();
+        }
+
+        function updateProgress() {
+            const totalSteps = 7; // Registration + 5 modules + quiz
+            let currentStep = currentModule;
+            if (document.getElementById('quiz').classList.contains('active')) currentStep = 6;
+            if (document.getElementById('certificate').classList.contains('active')) currentStep = 7;
+            
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function downloadData() {
+            const csvData = [
+                ['Vorname', 'Nachname', 'Email', 'Firma', 'Startzeit', 'Abschlusszeit', 'Quiz-Ergebnis', 'Zertifikat-ID'],
+                [userData.firstName, userData.lastName, userData.email, userData.company, userData.startTime, userData.completionTime, userData.quizScore + '/8', userData.certificateId]
+            ];
+            
+            const csvContent = csvData.map(row => row.join(',')).join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `AML_CFT_Training_${userData.certificateId}.csv`;
+            a.click();
+            
+            window.URL.revokeObjectURL(url);
+        }
+
+        function printCertificate() {
+            window.print();
+        }
+
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+</html>
