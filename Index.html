@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AML/CFT Compliance Schulung für deutsche CASPs. Interaktives Training, Quiz und Zertifikat.">
+    <meta name="keywords" content="AML, CFT, Krypto, CASP, Compliance, Schulung, Training">
+    <title>AML/CFT Schulung für deutsche CASPs</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="container">
+    <header class="header" role="banner">
+        <h1 aria-label="AML/CFT Compliance Schulung">🛡️ AML/CFT Compliance Schulung</h1>
+        <p>Für deutsche Crypto Asset Service Provider (CASPs)</p>
+        <div class="progress-bar" aria-label="Fortschritt">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+        <span id="progressPercent" aria-live="polite"></span>
+    </header>
+
+    <!-- Registrierung -->
+    <section class="section active" id="registration" role="region" aria-labelledby="registrationTitle">
+        <h2 id="registrationTitle">📋 Teilnehmerregistrierung</h2>
+        <form id="registrationForm" autocomplete="on" novalidate>
+            <div class="form-group">
+                <label for="firstName">Vorname *</label>
+                <input type="text" id="firstName" autocomplete="given-name" required aria-required="true">
+            </div>
+            <div class="form-group">
+                <label for="lastName">Nachname *</label>
+                <input type="text" id="lastName" autocomplete="family-name" required aria-required="true">
+            </div>
+            <div class="form-group">
+                <label for="email">E-Mail-Adresse *</label>
+                <input type="email" id="email" autocomplete="email" required aria-required="true">
+            </div>
+            <div class="form-group">
+                <label for="company">Firmenname</label>
+                <input type="text" id="company" autocomplete="organization">
+            </div>
+            <button type="button" class="btn" onclick="startTraining()" aria-label="Schulung beginnen" role="button">Schulung beginnen</button>
+            <span class="form-error" id="formError" aria-live="assertive"></span>
+        </form>
+    </section>
+
+    <!-- Modul 1 -->
+    <section class="section" id="module1" aria-labelledby="mod1title">
+        <h2 id="mod1title">🏢 Modul 1: Know Your Business (KYB) im Krypto-Bereich</h2>
+        <div class="visual-box">
+            <h3>🔍 Was ist KYB?</h3>
+            <p>Know Your Business ist der Verifizierungsprozess zur Authentifizierung der Identität und Legitimität von Geschäftskunden vor Geschäftsbeziehungen.</p>
+        </div>
+        <h3>Kernelemente des KYB-Prozesses</h3>
+        <div class="phase-container">
+            <div class="phase-box">
+                <div class="phase-number" aria-label="Geschäftsregistrierung">📄</div>
+                <h4>Geschäftsregistrierung</h4>
+                <p>Verifizierung von Firmenname, Adresse und Registrierungsnummer</p>
+            </div>
+            <div class="phase-box">
+                <div class="phase-number" aria-label="Eigentumsstruktur">👥</div>
+                <h4>Eigentumsstruktur</h4>
+                <p>Identifizierung des wirtschaftlich Berechtigten (UBO)</p>
+            </div>
+            <div class="phase-box">
+                <div class="phase-number" aria-label="Regulatorische Compliance">⚖️</div>
+                <h4>Regulatorische Compliance</h4>
+                <p>Überprüfung der AML/CFT-Bestimmungen</p>
+            </div>
+        </div>
+        <h3>KYB-Anforderungen für CASPs</h3>
+        <ul>
+            <li><strong>Handelsregisterauszug:</strong> Nicht älter als 3 Monate</li>
+            <li><strong>UBO-Identifizierung:</strong> Bei Beteiligung &gt; 25%</li>
+            <li><strong>Geschäftsführer-Legitimation:</strong> Ausweis und Bevollmächtigung</li>
+            <li><strong>Zweckbestimmung:</strong> Dokumentation des Geschäftszwecks</li>
+        </ul>
+        <div class="red-flag" aria-label="Warnhinweis">
+            <strong>Red Flag:</strong> Komplexe Eigentumsstrukturen über mehrere Jurisdiktionen ohne erkennbaren Geschäftszweck
+        </div>
+        <button class="btn" onclick="nextModule(2)" aria-label="Weiter zu Modul 2" role="button">Weiter zu Modul 2</button>
+    </section>
+
+    <!-- Modul 2 -->
+    <section class="section" id="module2" aria-labelledby="mod2title">
+        <h2 id="mod2title">💰 Modul 2: Die drei Phasen der Geldwäsche</h2>
+        <div class="visual-box">
+            <h3>🔄 Geldwäsche-Zyklus</h3>
+            <p>Geldwäsche ist ein dreistufiger Prozess zur Verschleierung der illegalen Herkunft von Geldern</p>
+        </div>
+        <div class="phase-container">
+            <div class="phase-box">
+                <div class="phase-number">1</div>
+                <h4>Platzierung (Placement)</h4>
+                <p>Einbringung illegaler Gelder ins Finanzsystem</p>
+                <ul>
+                    <li>Direkte Krypto-Zahlungen</li>
+                    <li>Fiat-zu-Krypto-Konvertierung</li>
+                    <li>Verwendung von Krypto-ATMs</li>
+                </ul>
+            </div>
+            <div class="phase-box">
+                <div class="phase-number">2</div>
+                <h4>Verschleierung (Layering)</h4>
+                <p>Verschleierung der illegalen Herkunft</p>
+                <ul>
+                    <li>Chain Hopping</li>
+                    <li>Krypto-Mixer/Tumbler</li>
+                    <li>P2P-Plattformen</li>
+                </ul>
+            </div>
+            <div class="phase-box">
+                <div class="phase-number">3</div>
+                <h4>Integration</h4>
+                <p>Rückführung in legitimes System</p>
+                <ul>
+                    <li>Immobilien-Investitionen</li>
+                    <li>Luxusgüter-Käufe</li>
+                    <li>Geschäftsunternehmen</li>
+                </ul>
+            </div>
+        </div>
+        <h3>Krypto-spezifische Verschleierungstaktiken</h3>
+        <div class="case-study">
+            <h4>🔀 Chain Hopping</h4>
+            <p>Bewegung von Assets zwischen verschiedenen Blockchains (Bitcoin → Ethereum → Monero) zur Umgehung der Erkennung</p>
+        </div>
+        <div class="case-study">
+            <h4>🌪️ Krypto-Mixer</h4>
+            <p>Services wie Tornado Cash, die Transaktionsspuren aufbrechen und die Zuordnung zu ursprünglichen Adressen verschleiern</p>
+        </div>
+        <button class="btn" onclick="nextModule(3)" aria-label="Weiter zu Modul 3" role="button">Weiter zu Modul 3</button>
+    </section>
+
+    <!-- Modul 3 -->
+    <section class="section" id="module3" aria-labelledby="mod3title">
+        <h2 id="mod3title">🚨 Modul 3: Reale Krypto-Geldwäsche-Fälle</h2>
+        <div class="case-study">
+            <h3>💥 Fall 1: Bitfinex-Hack (2016)</h3>
+            <p><strong>Gestohlene Summe:</strong> 119.756 Bitcoin (damals 72 Mio. USD, heute über 3 Mrd. USD)</p>
+            <p><strong>Methoden:</strong></p>
+            <ul>
+                <li>Chain Hopping zwischen verschiedenen Blockchains</li>
+                <li>Verwendung von Krypto-Mixern zur Verschleierung</li>
+                <li>Kleine VASPs mit schwachen AML-Kontrollen</li>
+                <li>Zeitverzögerte Aktivierung nach Jahren</li>
+            </ul>
+            <p><strong>Aufklärung:</strong> 2022 durch Blockchain-Analytics aufgedeckt und Täter verhaftet</p>
+        </div>
+        <div class="case-study">
+            <h3>🕸️ Fall 2: Hydra Darknet Market</h3>
+            <p><strong>Volumen:</strong> Über 5 Milliarden USD illegaler Transaktionen</p>
+            <p><strong>Methoden:</strong></p>
+            <ul>
+                <li>Unregulierte Börsen in schwachen AML-Jurisdiktionen</li>
+                <li>Privacy Coins (Monero) zur Transaktionsverschleierung</li>
+                <li>OTC-Broker ohne KYC-Anforderungen</li>
+                <li>Automatisierte Mixing-Services</li>
+            </ul>
+            <p><strong>Impact:</strong> Größter Darknet-Marktplatz weltweit bis zur Schließung 2022</p>
+        </div>
+        <div class="case-study">
+            <h3>🇰🇵 Fall 3: Lazarus Group (Nordkorea)</h3>
+            <p><strong>Gestohlene Summe:</strong> Über 1,7 Milliarden USD durch verschiedene Angriffe</p>
+            <p><strong>Methoden:</strong></p>
+            <ul>
+                <li>DeFi-Plattformen ohne KYC-Anforderungen</li>
+                <li>Cross-Chain-Swapping zwischen verschiedenen Blockchains</li>
+                <li>Staatlich koordinierte Cyberangriffe</li>
+                <li>Nutzung von DEXs zur Vermeidung von Compliance</li>
+            </ul>
+        </div>
+        <div class="red-flag" aria-label="Lektion">
+            <strong>Lesson Learned:</strong> Diese Fälle zeigen die Wichtigkeit robuster AML-Kontrollen und kontinuierlicher Blockchain-Überwachung
+        </div>
+        <button class="btn" onclick="nextModule(4)" aria-label="Weiter zu Modul 4" role="button">Weiter zu Modul 4</button>
+    </section>
+
+    <!-- Modul 4 -->
+    <section class="section" id="module4" aria-labelledby="mod4title">
+        <h2 id="mod4title">⚡ Modul 4: Counter-Terrorism Financing (CTF)</h2>
+        <div class="visual-box">
+            <h3>🎯 CTF-Ziele</h3>
+            <p>Verhinderung der Nutzung von Kryptowährungen zur Finanzierung terroristischer Aktivitäten</p>
+        </div>
+        <h3>Terrorismusfinanzierungs-Risiken bei Krypto</h3>
+        <ul>
+            <li><strong>Pseudonyme Transaktionen:</strong> Schwer nachzuverfolgen</li>
+            <li><strong>Grenzüberschreitende Transfers:</strong> Ohne traditionelle Bankenaufsicht</li>
+            <li><strong>Dezentrale Finanzierung:</strong> DeFi-Protokolle ohne zentrale Kontrolle</li>
+            <li><strong>Schnelle Liquidität:</strong> Sofortige Umwandlung in verschiedene Assets</li>
+        </ul>
+        <h3>Red Flags für CTF</h3>
+        <div class="red-flag">Transaktionen aus/zu Hochrisikoländern unter EU-Sanktionen (Russland, Belarus, Iran, Nordkorea)</div>
+        <div class="red-flag">Ungewöhnliche Transaktionsmuster ohne erkennbaren Geschäftszweck</div>
+        <div class="red-flag">Nutzung von Privacy Coins (Monero, Zcash) oder Mixing-Services</div>
+        <div class="red-flag">Transaktionen zu bekannten Darknet-Adressen oder Sanktionslisten-Einträgen</div>
+        <h3>EU-Sanktionen gegen Russland und Belarus</h3>
+        <div class="case-study">
+            <h4>📜 Verordnung (EU) 833/2014 - Artikel 5b</h4>
+            <p><strong>Verbot:</strong> Bereitstellung von Krypto-Wallet-, Konto- oder Verwahrungsdienstleistungen für russische und belarussische Staatsangehörige</p>
+            <p><strong>Schwellenwert:</strong> 10.000 EUR pro natürlicher Person</p>
+            <p><strong>Ausnahmen:</strong> EU-Bürger und Residenten mit gültiger Aufenthaltserlaubnis</p>
+        </div>
+        <button class="btn" onclick="nextModule(5)" aria-label="Weiter zu Modul 5" role="button">Weiter zu Modul 5</button>
+    </section>
+
+    <!-- Modul 5 -->
+    <section class="section" id="module5" aria-labelledby="mod5title">
+        <h2 id="mod5title">📊 Modul 5: Blockchain-Analytics und Überwachung</h2>
+        <div class="visual-box">
+            <h3>🔬 Moderne Analytics-Tools</h3>
+            <p>Einsatz von KI und Machine Learning zur Erkennung verdächtiger Krypto-Transaktionen</p>
+        </div>
+        <h3>Suspicious Money Laundering Account Detection (SMLAD)</h3>
+        <ul>
+            <li><strong>40 statistische Features:</strong> Charakterisierung von Transaktionsverhalten</li>
+            <li><strong>Anomalie-Erkennung:</strong> Clustering-Methoden zur Mustererkennung</li>
+            <li><strong>Graph-Analyse:</strong> Visualisierung von Transaktionsnetzwerken</li>
+            <li><strong>Temporal Analysis:</strong> Zeitbasierte Verhaltensmuster</li>
+        </ul>
+        <h3>Echtzeit-Überwachung</h3>
+        <div class="phase-container">
+            <div class="phase-box">
+                <div class="phase-number">⚡</div>
+                <h4>Sofortige Erkennung</h4>
+                <p>Verdächtige Transaktionen in Echtzeit identifizieren</p>
+            </div>
+            <div class="phase-box">
+                <div class="phase-number">🎯</div>
+                <h4>Risk Scoring</h4>
+                <p>Automatische Bewertung des Geldwäsche-Risikos</p>
+            </div>
+            <div class="phase-box">
+                <div class="phase-number">📋</div>
+                <h4>Auto-Reporting</h4>
+                <p>Automatische SAR-Generierung bei Verdachtsfällen</p>
+            </div>
+        </div>
+        <h3>Praktische Compliance-Maßnahmen</h3>
+        <ul>
+            <li><strong>Blockchain-Analytics-Tools:</strong> Chainalysis, Elliptic, CipherTrace</li>
+            <li><strong>Blacklisting:</strong> OFAC SDN List, EU Consolidated List</li>
+            <li><strong>Enhanced Due Diligence:</strong> Bei Transaktionen &gt; 1.000 EUR</li>
+            <li><strong>SAR-Reporting:</strong> Verdachtsmeldungen an FIU binnen 2 Werktagen</li>
+        </ul>
+        <div class="red-flag">
+            <strong>Wichtig:</strong> Alle Compliance-Maßnahmen müssen dokumentiert und für BaFin-Prüfungen verfügbar sein
+        </div>
+        <button class="btn" onclick="startQuiz()" aria-label="Quiz beginnen" role="button">Quiz beginnen</button>
+    </section>
+
+    <!-- Quiz -->
+    <section class="section" id="quiz" aria-labelledby="quiztitle">
+        <h2 id="quiztitle">📝 Abschlusstest - AML/CFT Compliance</h2>
+        <p><strong>Hinweis:</strong> Sie müssen alle 8 Fragen korrekt beantworten (100% Erfolgsquote)</p>
+        <div id="quizContainer"></div>
+        <nav class="navigation">
+            <button class="btn" id="submitQuiz" onclick="submitQuiz()" style="display:none;">Test auswerten</button>
+            <button class="btn" id="retakeQuiz" onclick="retakeQuiz()" style="display:none;">Test wiederholen</button>
+        </nav>
+    </section>
+
+    <!-- Zertifikat -->
+    <section class="section" id="certificate" aria-labelledby="certificatetitle">
+        <div class="certificate">
+            <h2 id="certificatetitle">🏆 Herzlichen Glückwunsch!</h2>
+            <h3>AML/CFT Compliance Zertifikat</h3>
+            <p>Hiermit wird bestätigt, dass</p>
+            <h3 id="certificateName"></h3>
+            <p>die AML/CFT-Schulung für deutsche CASPs erfolgreich abgeschlossen hat.</p>
+            <p>Datum: <span id="certificateDate"></span></p>
+            <p>Zertifikat-ID: <span id="certificateId"></span></p>
+        </div>
+        <nav class="navigation">
+            <button class="btn" onclick="downloadData()">📥 Daten exportieren</button>
+            <button class="btn" onclick="printCertificate()">🖨️ Zertifikat drucken</button>
+        </nav>
+    </section>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
